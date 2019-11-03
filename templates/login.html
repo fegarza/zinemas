@@ -1,0 +1,22 @@
+{% extends "header&footer.html" %}
+ {% block contenido %}
+<div class="login">
+  {% load staticfiles %}
+    <div class="login_cont">
+        <img src='{% static 'imagenes/web/favicon.png' %}'>
+        <h3>Bienvenido a Zinemas</h3>
+        <div class='form'>
+            <form method="POST">
+              {% csrf_token %}
+                <input type="text" placeholder="Usuario" name="us">
+                <input type="password" placeholder="Contraseña" name="pw">
+                <button type="submit">ENTRAR</button>
+                <a href="{% url 'social:begin' 'facebook' %}"><div class='login_facebook'>INICIAR SESION CON FACEBOOK</div></a>
+            </form>
+        </div>
+    </div>
+</div>
+  <div class='registrarme'>
+        <p>¿No tienes cuenta?</p>  <a href="{% url 'cms:registro' %}">Resgistrate aqui</a>
+</div>
+{% endblock contenido %}

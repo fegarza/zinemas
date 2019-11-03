@@ -1,0 +1,60 @@
+{% extends 'header&footer.html' %}
+{% load staticfiles %}
+{% block contenido %}
+                    <div class='reproductor'>
+                      <iframe src="{{ contenido.url }}" allowfullscreen="true"></iframe>
+                    </div>
+                    <div class='reproductor_info'>
+                      <div class='reproductor_collect_left_repre' style="background:url({{ contenido.poster.url }}) no-repeat; background-size:cover;">
+                        <div class="calidad">
+                          {{ contenido.calidad }}
+                        </div>
+                        <div class='valoracion'>
+                          {{ contenido.valoracion }} <i>grade</i>
+                        </div>
+                      </div>
+                      <div class="reproductor_collect_right">
+                        <h2>{{ contenido.titulo }}</h2>
+                        <p>{{ contenido.sinopsis }}</p>
+                        <div class='info'>{{ contenido.vistas }} Reproducciones <i>play_circle_filled</i>|
+                        {{ contenido.valoracion }} Valoraciones <i>grade</i>|
+                        {{ contenido.favoritos }} Favoritos <i>favorite</i> </div>
+                      </div>
+                    </div>
+                    <div class='reproductor_footer'>
+                        <div class='reproductor_accion'>
+                          <a href="{{ contenido.descarga }}" target="_blank" style="position:relative;">
+                            <div class='agr_descargar'>Descargar pelicula</div>
+                          </a>
+                          {% if user.is_authenticated %}
+                              <div class='agr_favorito' onclick="agr_fav({{ contenido.pk }})">
+                                  Agregar a favoritos
+                              </div>
+                          {% endif %}
+                          {% if user.is_authenticated %}
+                              <div class='agr_pelicula' onclick="agr_val({{ contenido.pk }})">
+                                  Agregar a peliculas valoradas
+                              </div>
+                          {% endif %}
+                        </div>
+                        <div class='reproductor_comentarios'>
+                          <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.6";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+                        <div class="fb-comments" data-href="http://zinemas.org/reproductor/{{ contenido.pk }}/" data-width="100%" data-numposts="5"></div>
+                        </div>
+                    </div>
+                    <div class='pelicula_box'>
+                        <h1 style='background:#40b9a6;'>Peliculas recomendadas</h1>
+                        <div class='pelicula_box_cont_opc' id='categoria_favoritos'>
+                          <script type="text/javascript">
+                            ajax_categoria("favoritos",1);
+                          </script>
+                        </div>
+                    </div>
+{% endblock %}
+<!---->

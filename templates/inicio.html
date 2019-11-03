@@ -1,0 +1,94 @@
+﻿{% extends 'header&footer.html' %}
+
+{% block contenido %}
+                    <div class='repre'>
+                        <div class='repre_cont'>
+ 
+                          {% for x in slider %}
+                            <div class='slider' style="background:url({{ x.fondo.url }}) top no-repeat; background-size:cover; ">
+                                <a href='{% url 'cms:reproductor' pk=x.videopk.pk %}'><div class='ver_pelicula'>Mirar pelicula</div></a>
+                            </div>
+                          {% endfor %}
+ 
+                        </div>
+                        <div class='repre_right'><i>keyboard_arrow_right</i></div>
+                        <div class='repre_left'><i>keyboard_arrow_left</i></div>
+                    </div>
+                    <div class='categorias'>
+                        <div class='ver_categorias'>
+                            Ver categorias <i>arrow_downward</i>
+                        </div>
+                        <div class='categoria' onclick="window.location='{% url 'cms:cate' %}?categoria=accion';">
+                            <i>whatshot</i>
+                            <p>Acción</p>
+                        </div>
+                        <div class='categoria' onclick="window.location='{% url 'cms:cate' %}?categoria=romance';">
+                            <i>favorite</i>
+                            <p>Romance</p>
+                        </div>
+                        <div class='categoria' onclick="window.location='{% url 'cms:cate' %}?categoria=infantil';">
+                            <i>face</i>
+                            <p>Infantiles</p>
+                        </div>
+                        <div class='categoria' onclick="window.location='{% url 'cms:cate' %}?categoria=terror';">
+                            <i>mood_bad</i>
+                            <p>Terror</p>
+                        </div>
+                        <div class='categoria' onclick="window.location='{% url 'cms:cate' %}?categoria=anime';">
+                            <i>adb</i>
+                            <p>Anime</p>
+                        </div>
+                         <div class='categoria' onclick="window.location='{% url 'cms:cate' %}?categoria=documental';">
+                            <i>public</i>
+                            <p>Documental</p>
+                        </div>
+                        <div class='categoria' onclick="window.location='{% url 'cms:cate' %}?categoria=drama';">
+                            <i>star</i>
+                            <p>Drama</p>
+                        </div>
+                        <div class='categoria'onclick="window.location='{% url 'cms:cate' %}?categoria=comedia';">
+                            <i>sentiment_very_satisfied</i>
+                            <p>Comedia</p>
+                        </div>
+                    </div>
+                    <div class='pelicula_box'>
+                        <h1 style='background:#4CAF50;'>Ultimas peliculas subidas</h1>
+                        <div class='pelicula_box_cont_opc' id='categoria_todos'>
+                          <script type="text/javascript">
+                            ajax_categoria("todos",1);
+                          </script>
+                        </div>
+                    </div>
+                    <div class='pelicula_box'>
+                        <h1 style='background:#3F51B5;'>Estrenos</h1>
+                        <div class='pelicula_box_cont_opc' id='categoria_estreno'>
+                          <script type="text/javascript">
+                            ajax_categoria("estreno",1);
+                          </script>
+                        </div>
+                    </div>
+                    <div class='pelicula_box'>
+                        <h1 style='background:#E91E63;'>Peliculas mas vistas</h1>
+                        <div class='pelicula_box_cont_opc' id='categoria_vistas'>
+                          <script type="text/javascript">
+                            ajax_categoria("vistas",1);
+                          </script>
+                        </div>
+                    </div>
+                    <div class='pelicula_box'>
+                        <h1 style='background:#F44336;'>Peliculas mejor valoradas</h1>
+                        <div class='pelicula_box_cont_opc' id='categoria_valoracion'>
+                          <script type="text/javascript">
+                            ajax_categoria("valoracion",1);
+                          </script>
+                        </div>
+                    </div>
+                    <div class='pelicula_box'>
+                        <h1 style='background:#009688;'>Peliculas recomendadas</h1>
+                        <div class='pelicula_box_cont_opc' id='categoria_favoritos'>
+                          <script type="text/javascript">
+                            ajax_categoria("favoritos",1);
+                          </script>
+                        </div>
+                    </div>
+{% endblock %}

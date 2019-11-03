@@ -1,0 +1,130 @@
+{% extends "header&footer.html" %}
+{% block contenido %}
+{% load staticfiles %}
+<div class='cate'>
+{% if categoria == "accion" %}
+    <div class='cate_repre' style="background:url({% static 'imagenes/web/accion.png' %}) center; background-size:cover">
+            <h1>{{ categoria }}</h1>
+    </div>
+    <div class='cate_cont'>
+    </div>
+    <div class='pelicula_box'>
+        <h1 style='background:#f44336;'>{{ categoria }}</h1>
+        <div class='pelicula_box_cont_opc' id='categoria_{{ categoria }}'>
+          <script type="text/javascript">
+            ajax_categoria("{{ categoria }}",1);
+          </script>
+        </div>
+    </div>
+{% endif %}
+{% if categoria == "romance" %}
+    <div class='cate_repre' style="background:url({% static 'imagenes/web/romance.png' %}) center; background-size:cover">
+            <h1>{{ categoria }}</h1>
+    </div>
+    <div class='cate_cont'>
+    </div>
+    <div class='pelicula_box'>
+        <h1 style='background:#e91e63;'>{{ categoria }}</h1>
+        <div class='pelicula_box_cont_opc' id='categoria_{{ categoria }}'>
+          <script type="text/javascript">
+            ajax_categoria("{{ categoria }}",1);
+          </script>
+        </div>
+    </div>
+{% endif %}
+{% if categoria == "anime" %}
+    <div class='cate_repre' style="background:url({% static 'imagenes/web/anime.png' %}) center; background-size:cover">
+            <h1>{{ categoria }}</h1>
+    </div>
+    <div class='cate_cont'>
+    </div>
+    <div class='pelicula_box'>
+        <h1 style='background:#00bcd4;'>{{ categoria }}</h1>
+        <div class='pelicula_box_cont_opc' id='categoria_{{ categoria }}'>
+          <script type="text/javascript">
+            ajax_categoria("{{ categoria }}",1);
+          </script>
+        </div>
+    </div>
+{% endif %}
+{% if categoria == "comedia" %}
+    <div class='cate_repre' style="background:url({% static 'imagenes/web/comedia.png' %}) center; background-size:cover">
+            <h1>{{ categoria }}</h1>
+    </div>
+    <div class='cate_cont'>
+    </div>
+    <div class='pelicula_box'>
+        <h1 style='background:#3f51b5;'>{{ categoria }}</h1>
+        <div class='pelicula_box_cont_opc' id='categoria_{{ categoria }}'>
+          <script type="text/javascript">
+            ajax_categoria("{{ categoria }}",1);
+          </script>
+        </div>
+    </div>
+{% endif %}
+{% if categoria == "drama" %}
+    <div class='cate_repre' style="background:url({% static 'imagenes/web/drama.png' %}) center; background-size:cover">
+            <h1>{{ categoria }}</h1>
+    </div>
+    <div class='cate_cont'>
+    </div>
+    <div class='pelicula_box'>
+        <h1 style='background:#4caf50;'>{{ categoria }}</h1>
+        <div class='pelicula_box_cont_opc' id='categoria_{{ categoria }}'>
+          <script type="text/javascript">
+            ajax_categoria("{{ categoria }}",1);
+          </script>
+        </div>
+    </div>
+{% endif %}
+{% if categoria == "terror" %}
+    <div class='cate_repre' style="background:url({% static 'imagenes/web/terror.png' %}) center; background-size:cover">
+            <h1>{{ categoria }}</h1>
+    </div>
+    <div class='cate_cont'>
+    </div>
+    <div class='pelicula_box'>
+        <h1 style='background:#673ab7;'>{{ categoria }}</h1>
+        <div class='pelicula_box_cont_opc' id='categoria_{{ categoria }}'>
+          <script type="text/javascript">
+            ajax_categoria("{{ categoria }}",1);
+          </script>
+        </div>
+    </div>
+{% endif %}
+{% if categoria == "documental" %}
+    <div class='cate_repre' style="background:url({% static 'imagenes/web/documental.png' %}) center; background-size:cover">
+            <h1>{{ categoria }}</h1>
+    </div>
+    <div class='cate_cont'>
+    </div>
+    <div class='pelicula_box'>
+        <h1 style='background:#009688;'>{{ categoria }}</h1>
+        <div class='pelicula_box_cont_opc' id='categoria_{{ categoria }}'>
+          <script type="text/javascript">
+            ajax_categoria("{{ categoria }}",1);
+          </script>
+        </div>
+    </div>
+{% endif %}
+{% if categoria == "infantil" %}
+    <div class='cate_repre' style="background:url({% static 'imagenes/web/infantil.png' %}) center; background-size:cover">
+            <h1>{{ categoria }}</h1>
+    </div>
+    <div class='cate_cont'>
+    </div>
+    <div class='pelicula_box'>
+        <h1 style='background:#ff5722;'>{{ categoria }}</h1>
+        <div class='pelicula_box_cont_opc' id='categoria_{{ categoria }}'>
+          <script type="text/javascript">
+            ajax_categoria("{{ categoria }}",1);
+          </script>
+        </div>
+    </div>
+{% endif %}
+
+
+
+                    </div>
+
+{% endblock %}

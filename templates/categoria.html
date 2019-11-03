@@ -1,0 +1,153 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zinemas</title>
+        <link rel="icon" sizes="192x192" href="{% static 'imagenes/web/favicon.png' %}">
+        <script src='{% static 'js/jquery.js' %}'></script>
+        <link rel="stylesheet" href="{% static 'css/inicio.css' %}" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="{% static 'js/general.js' %}"></script>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    </head>
+    <body>
+      {% if tipo == 'video' %}
+      <div class='pelicula_box_cont' >
+      {% for x in contenido %}
+      <!-- CAJA -->
+      <div class='caj'>
+        <div class='caja' style='background:url({{ x.poster.url }}) center no-repeat; background-size:cover;' onclick="sinopsis({{ x.pk }}, 'abrir', '{{ x.trailer }}')">
+            <div class='caja_repre'>
+                <i>play_circle_filled</i>
+            </div>
+            <div class='calidad'>
+              {{ x.calidad }}
+            </div>
+            <div class='valoracion'>
+              {{ x.valoracion }} <i>grade</i>
+            </div>
+        </div>
+        <div class='caja_info'>
+          {{ x.titulo }}
+          <br>
+          <p>{{ x.fecha|slice:"11" }}</p>
+        </div>
+      </div>
+      <!-- SINOPSIS DE LA CAJA -->
+      <div class='pelicula_repre' id='pelicula_repre{{x.pk}}'>
+              <div class='pelicula_repre_cont'>
+                  <div class='sinopsis_left'>
+                      <div class='sinopsis_repre' style="background:url({{ x.poster.url }}) center no-repeat; background-size:cover;">
+                      </div>
+                      <a href="{% url 'cms:reproductor' pk=x.pk %}">
+                        <div class='agr_pelicula'>
+                            Ver pelicula
+                        </div>
+                      </a>
+                      {% if user.is_authenticated %}
+                          <div class='agr_favorito' onclick="agr_fav({{ x.pk }})">
+                              Agregar a favoritos
+                          </div>
+                      {% endif %}
+                      <a href='{{ x.descarga }}' target="_blank">
+                        <div class='agr_descargar'>
+                            Descargar pelicula
+                        </div>
+                      </a>
+                  </div>
+                  <div class='sinopsis_right'>
+                      <h2>{{x.titulo}}</h2>
+                      <p>{{ x.sinopsis }}</p>
+                      <div id='iframe_yt{{ x.pk }}'></div>
+                  </div>
+                  <div class='sinopsis_close' onclick="sinopsis({{x.pk}}, 'cerrar')">
+                      <i>close</i>
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+    </div>
+    {% if contenido.has_previous or contenido.has_next %}
+    <h3 style="text-align:center;">Pagina {{ contenido.number }} de {{ contenido.paginator.num_pages }}</h3>
+    {% endif %}
+    <div class='control_categoria'>
+      {% if contenido.has_previous %}
+        <h4>Anterior pagina | </h4> <div class='next' onclick="ajax_categoria('{{categoria}}',{{ contenido.previous_page_number }})"><i>keyboard_arrow_left</i></div>
+      {% endif %}
+      {% if contenido.has_next %}
+        <h4>Siguiente pagina | </h4>  <div class='next' onclick="ajax_categoria('{{categoria}}',{{ contenido.next_page_number }})"><i>keyboard_arrow_right</i></div>
+      {% endif %}
+    </div>
+      {% else %}
+      <div class='pelicula_box_cont' >
+      {% for x in contenido %}
+      <!-- CAJA -->
+      <div class='caj'>
+        <div class='caja' style='background:url({{ x.videopk.poster.url }}) center no-repeat; background-size:cover;' onclick="sinopsis({{ x.videopk.pk }}, 'abrir', '{{ x.videopk.trailer }}')">
+            <div class='caja_repre'>
+                <i>play_circle_filled</i>
+            </div>
+            <div class='calidad'>
+              {{ x.videopk.calidad }}
+            </div>
+            <div class='valoracion'>
+              {{ x.videopk.valoracion }} <i>grade</i>
+            </div>
+        </div>
+        <div class='caja_info'>
+          {{ x.videopk.titulo }}
+          <br>
+          <p>{{ x.videopk.fecha|slice:"11" }}</p>
+        </div>
+      </div>
+      <!-- SINOPSIS DE LA CAJA -->
+      <div class='pelicula_repre' id='pelicula_repre{{x.videopk.pk}}'>
+              <div class='pelicula_repre_cont'>
+                <div class='sinopsis_left'>
+                    <div class='sinopsis_repre' style="background:url({{ x.videopk.poster.url }}) center no-repeat; background-size:cover;">
+                    </div>
+                    <a href="{% url 'cms:reproductor' pk=x.videopk.pk %}">
+                      <div class='agr_pelicula'>
+                          Ver pelicula
+                      </div>
+                    </a>
+                    {% if user.is_authenticated %}
+                        <div class='agr_favorito' onclick="agr_fav({{ x.videopk.pk }})">
+                            Agregar a favoritos
+                        </div>
+                    {% endif %}
+                    <a href='{{ x.videopk.descarga }}' target="_blank">
+                      <div class='agr_descargar'>
+                          Descargar pelicula
+                      </div>
+                    </a>
+                </div>
+                  <div class='sinopsis_right'>
+                      <h2>{{x.videopk.titulo}}</h2>
+                      <p>{{ x.videopk.sinopsis }}</p>
+                      <div id='iframe_yt{{ x.videopk.pk }}'></div>
+                  </div>
+                  <div class='sinopsis_close' onclick="sinopsis({{x.videopk.pk}}, 'cerrar')">
+                      <i>close</i>
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+    </div>
+    {% if contenido.has_previous or contenido.has_next %}
+    <h3 style="text-align:center;">Pagina {{ contenido.number }} de {{ contenido.paginator.num_pages }}</h3>
+    {% endif %}
+
+      <div class='control_categoria'>
+      {% if contenido.has_previous %}
+      <h4>Anterior pagina | </h4> <div class='next' onclick="ajax_categoria('{{categoria}}',{{ contenido.previous_page_number }})"><i>keyboard_arrow_left</i></div>
+    {% endif %}
+    {% if contenido.has_next %}
+      <h4>Siguiente pagina | </h4>  <div class='next' onclick="ajax_categoria('{{categoria}}',{{ contenido.next_page_number }})"><i>keyboard_arrow_right</i></div>
+      {% endif %}
+    </div>
+      {% endif %}
+
+</body>
+</html>

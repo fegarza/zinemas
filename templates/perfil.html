@@ -1,0 +1,131 @@
+{% extends 'header&footer.html' %}
+{% block contenido %}
+{% load staticfiles %}
+
+                  <div class='perfil_repre' style="background:url({% static 'imagenes/web/fondo.png' %}) center no-repeat; background-size:cover;">
+                        <div class='perfil_img' style="background:url({% if tipo == 'facebook' %}https://graph.facebook.com/{{ contenido.uid }}/picture?type=large&return_ssl_resources=1{% else %}{{ contenido.perfil.url }}{% endif %}) center no-repeat; background-size:cover;">
+
+                        </div>
+                        <h2>{% if tipo == 'facebook' %}{{ contenido.user.username }}{% else %}{{ contenido.user_id.username }}{% endif %}</h2>
+                    </div>
+                    <div class='favoritos'>
+                        <h1>Peliculas favoritas</h1>
+                        <div class="pelicula_box_cont_opc">
+                        <div class='pelicula_box_cont'>
+                          {% for x in favoritos %}
+                          <!-- CAJA -->
+                          <div class='caj'>
+                            <div class='caja' style='background:url({{ x.video.poster.url }}) center no-repeat; background-size:cover;' onclick="sinopsis({{ x.video.pk }}, 'abrir', '{{ x.video.trailer }}')">
+                                <div class='caja_repre'>
+                                    <i>play_circle_filled</i>
+                                </div>
+                                <div class='calidad'>
+                                  {{ x.video.calidad }}
+                                </div>
+                                <div class='valoracion'>
+                                  {{ x.video.valoracion }} <i>grade</i>
+                                </div>
+                            </div>
+                            <div class='caja_info'>
+                              {{ x.video.titulo }}
+                              <br>
+                              <p>{{ x.video.fecha|slice:"11" }}</p>
+                            </div>
+                          </div>
+                          <!-- SINOPSIS DE LA CAJA -->
+                          <div class='pelicula_repre' id='pelicula_repre{{x.video.pk}}'>
+                                  <div class='pelicula_repre_cont'>
+                                    <div class='sinopsis_left'>
+                                        <div class='sinopsis_repre' style="background:url({{ x.video.poster.url }}) center no-repeat; background-size:cover;">
+                                        </div>
+                                        <a href="{% url 'cms:reproductor' pk=x.video.pk %}">
+                                          <div class='agr_pelicula'>
+                                              Ver pelicula
+                                          </div>
+                                        </a>
+                                        {% if user.is_authenticated %}
+                                            <div class='agr_favorito' onclick="agr_fav({{ x.video.pk }})">
+                                                Agregar a favoritos
+                                            </div>
+                                        {% endif %}
+                                        <a href='{{ x.video.descarga }}' target="_blank">
+                                          <div class='agr_descargar'>
+                                              Descargar pelicula
+                                          </div>
+                                        </a>
+                                    </div>
+                                      <div class='sinopsis_right'>
+                                          <h2>{{x.video.titulo}}</h2>
+                                          <p>{{ x.video.sinopsis }}</p>
+                                          <div id='iframe_yt{{ x.video.pk }}'></div>
+                                      </div>
+                                      <div class='sinopsis_close' onclick="sinopsis({{x.video.pk}}, 'cerrar')">
+                                          <i>close</i>
+                                      </div>
+                                  </div>
+                              </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                     <div class='valoraciones'>
+                        <h1>Peliculas valoradas</h1>
+                        <div class="pelicula_box_cont_opc">
+                        <div class='pelicula_box_cont'>
+                          {% for x in valoraciones %}
+                          <!-- CAJA -->
+                          <div class='caj'>
+                            <div class='caja' style='background:url({{ x.video.poster.url }}) center no-repeat; background-size:cover;' onclick="sinopsis({{ x.video.pk }}, 'abrir', '{{ x.video.trailer }}')">
+                                <div class='caja_repre'>
+                                    <i>play_circle_filled</i>
+                                </div>
+                                <div class='calidad'>
+                                  {{ x.video.calidad }}
+                                </div>
+                                <div class='valoracion'>
+                                  {{ x.video.valoracion }} <i>grade</i>
+                                </div>
+                            </div>
+                            <div class='caja_info'>
+                              {{ x.video.titulo }}
+                              <br>
+                              <p>{{ x.video.fecha|slice:"11" }}</p>
+                            </div>
+                          </div>
+                          <!-- SINOPSIS DE LA CAJA -->
+                          <div class='pelicula_repre' id='pelicula_repre{{x.video.pk}}'>
+                                  <div class='pelicula_repre_cont'>
+                                    <div class='sinopsis_left'>
+                                        <div class='sinopsis_repre' style="background:url({{ x.video.poster.url }}) center no-repeat; background-size:cover;">
+                                        </div>
+                                        <a href="{% url 'cms:reproductor' pk=x.video.pk %}">
+                                          <div class='agr_pelicula'>
+                                              Ver pelicula
+                                          </div>
+                                        </a>
+                                        {% if user.is_authenticated %}
+                                            <div class='agr_favorito' onclick="agr_fav({{ x.video.pk }})">
+                                                Agregar a favoritos
+                                            </div>
+                                        {% endif %}
+                                        <a href='{{ x.video.descarga }}' target="_blank">
+                                          <div class='agr_descargar'>
+                                              Descargar pelicula
+                                          </div>
+                                        </a>
+                                    </div>
+                                      <div class='sinopsis_right'>
+                                          <h2>{{x.video.titulo}}</h2>
+                                          <p>{{ x.video.sinopsis }}</p>
+                                          <div id='iframe_yt{{ x.video.pk }}'></div>
+                                      </div>
+                                      <div class='sinopsis_close' onclick="sinopsis({{x.video.pk}}, 'cerrar')">
+                                          <i>close</i>
+                                      </div>
+                                  </div>
+                              </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+{% endblock %}

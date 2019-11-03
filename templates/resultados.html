@@ -1,0 +1,56 @@
+{% extends 'header&footer.html' %}
+{% block contenido %}
+{% if page == True %}
+{% for x in cont %}
+                    <div class='result'  onclick="sinopsis({{ x.pk }}, 'abrir', '{{ x.trailer }}')">
+                      <!-- CAJA -->
+                      <div class='caja' style='background:url({{ x.poster.url }}) center no-repeat; background-size:cover;'>
+                        <div class='calidad'>
+                          {{ x.calidad }}
+                        </div>
+                        <div class='valoracion'>
+                          {{ x.valoracion }} <i>grade</i>
+                        </div>
+                      </div>
+
+                        <div class='result_cont'>
+                        <p>  {{ x.sinopsis }}</p>
+                         </div>
+                    </div>
+                    <!-- SINOPSIS DE LA CAJA -->
+                    <div class='pelicula_repre' id='pelicula_repre{{x.pk}}'>
+                            <div class='pelicula_repre_cont'>
+                                <div class='sinopsis_left'>
+                                    <div class='sinopsis_repre' style="background:url({{ x.poster.url }}) center no-repeat; background-size:cover;">
+                                    </div>
+                                    <a href="{% url 'cms:reproductor' pk=x.pk %}">
+                                      <div class='agr_pelicula'>
+                                          Ver pelicula
+                                      </div>
+                                    </a>
+                                    {% if user.is_authenticated %}
+                                        <div class='agr_favorito' onclick="agr_fav({{ x.pk }})">
+                                            Agregar a favoritos
+                                        </div>
+                                    {% endif %}
+                                    <a href='{{ x.descarga }}' target="_blank">
+                                      <div class='agr_descargar'>
+                                          Descargar pelicula
+                                      </div>
+                                    </a>
+                                </div>
+                                <div class='sinopsis_right'>
+                                    <h2>{{x.titulo}}</h2>
+                                    <p>{{ x.sinopsis }}</p>
+                                  <div id='iframe_yt{{ x.pk }}'></div>
+                                </div>
+                                <div class='sinopsis_close' onclick="sinopsis({{x.pk}}, 'cerrar')">
+                                    <i>close</i>
+                                </div>
+                            </div>
+                        </div>
+{% endfor %}
+{% else %}
+  <h3>{{cont}}</h3>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'header&footer.html' %}
+{% block contenido %}
+{% load staticfiles %}
+          {% if contenido != "ninguno" %}
+          <div class="errores">
+              {{ contenido }}
+          </div>
+          {% endif %}
+            <div class='registro'>
+                        <div class='registro_left'>
+                            <div class="registro_logo">
+                            <img src="{% static 'imagenes/web/logo.png' %}">
+                            </div>
+                            <div class='registro_box'>
+                                <h2>Mejor experiencia</h2>
+                                <p>
+                                    Podras tener la posibilidad de agregar paliculas favoritas y valoradas a tu perfil
+                                </p>
+                            </div>
+                            <div class='registro_box'>
+                                <h2>Social</h2>
+                                <p>
+                                    Podras compartir y disfrutar las peliculas conn tus amigos totalmente gratis
+                                </p>
+                            </div>
+                            <div class='registro_box'>
+                                <h2>Empieza ahora</h2>
+                                <p>
+                                  Acceso ilimitado a todas las peliculas de Zinemas
+                                </p>
+                            </div>
+                        </div>
+                        <div class='registro_right'>
+                       <form method="post" autocomplete="off">
+                         {% csrf_token %}
+                           <h2>Registro</h2>
+                    <input type="text" id='in_text' placeholder="Introduce tu usuario" name='us'><br>
+                    <input type="email" id='in_text' placeholder="Introduce tu correo electronico" name='email'><br>
+                    <input type="text" id='in_text' placeholder="Introduce tu nombre real" name='nombre'><br>
+                    <input type="password" id='in_text' placeholder="Introduce tu contraseña" name='pw'><br>
+                    <input type="password" id='in_text' placeholder="Vuelve a introducir tu contraseña" name='pw2'><br>
+                    <button type="submit">Registrarme</button>
+                           <p>¿Quizas quieras leer nuestros terminos y condiciones antes de empezar? <a href='{% url 'cms:terminos' %}'>Terminos y condiciones  Zinemas</a></p>
+                    <h3>¿Ya tienes una cuenta? <a href='{% url 'cms:login' %}'>Iniciar sesión</a></h3>
+                  </form>
+                       </div>
+              </div>
+
+{% endblock %}

@@ -1,0 +1,142 @@
+<!--HEADER-->
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Zinemas</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <link rel="icon" sizes="192x192" href="{% static 'imagenes/web/favicon.png' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/inicio.css' %}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/general.js' %}"></script>
+        <link href='https://fonts.googleapis.com/css?family=Carter+One' rel='stylesheet' type='text/css'>
+        <script type="text/javascript">
+        function ajax_categoria(tipo, pag){
+          var conexion;
+          conexion = new XMLHttpRequest();
+          conexion.onreadystatechange =  function(){
+            if(conexion.readyState == 4 && conexion.status == 200){
+              document.getElementById("categoria_"+tipo).innerHTML = conexion.responseText;
+            }
+          }
+          conexion.open("GET","{% url 'cms:categoria' %}?categoria="+tipo+"&pag="+pag,true);
+          conexion.send();
+        }
+
+        function resultados(str){
+          if(str.length==0){
+              $('.resultados').css({"height":0});
+          }else{
+              $('.resultados').css({"height":'auto'});
+          }
+          var conexion;
+          if(str.length==0){
+            document.getElementById("resultados").innerHTML=" ";
+          }
+          conexion = new XMLHttpRequest();
+          conexion.onreadystatechange =  function(){
+            if(conexion.readyState==4 && conexion.status==200){
+              document.getElementById("resultados").innerHTML=conexion.responseText;
+            }
+          }
+          conexion.open("GET","{% url 'cms:sugerencias' %}?sug="+str,true);
+          conexion.send();
+        }
+
+        function agr_fav(pk){
+          alert("Pelicula agregada a favoritos");
+          var conexion;
+          conexion = new XMLHttpRequest();
+          conexion.onreadystatechange =  function(){
+            if(conexion.readyState==4 && conexion.status==200){
+              document.getElementById("ok").innerHTML=conexion.responseText;
+            }
+          }
+          conexion.open("GET","{% url 'cms:agr_fav' %}?pk="+pk,true);
+          conexion.send();
+        }
+        function agr_val(pk){
+          alert("Pelicula agregada a valoradas");
+          var conexion;
+          conexion = new XMLHttpRequest();
+          conexion.onreadystatechange =  function(){
+            if(conexion.readyState==4 && conexion.status==200){
+              document.getElementById("ok").innerHTML=conexion.responseText;
+            }
+          }
+          conexion.open("GET","{% url 'cms:agr_val' %}?pk="+pk,true);
+          conexion.send();
+        }
+        </script>
+    </head>
+    <body>
+        <div class='cont'>
+            <header>
+                <nav>
+                    <div class='logo' onclick="window.location='{% url 'cms:inicio' %}';">
+                        <img src="{% static 'imagenes/web/logo.png' %}">
+                    </div>
+                    <div class='buscador'>
+                      <form method="GET" action="{% url 'cms:busqueda' %}" autocomplete="off">
+                        <div class="etc"><input type="text"  name='clave' placeholder="¿Qué deseas buscar?" onkeyup="resultados(this.value)"><button type="submit"><i>search</i></button></div>
+                        <div class='resultados' id='resultados'>
+                        </div>
+                      </form>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                      <div class='sesion'>
+                          <i>person</i>
+                          <h3>{{ user.username }} </h3>
+                          <div class='sesion_cont'>
+                              <a href='{% url 'cms:perfil' pk=user.pk %}'><p><i>contacts</i> Mi pefil</p></a>
+                              <a href='{% url 'cms:logout' %}'><p><i>cancel</i>Cerrar sesion</p></a>
+                          </div>
+                      </div>
+                    {% else %}
+                      <div class='iniciar' onclick="window.location='{% url 'cms:login' %}';">Iniciar sesion</div>
+                    {% endif %}
+                </nav>
+            </header>
+    <!--/HEADER-->
+            <div class='contenedor'>
+                <div class='general_box'>
+                  {% block contenido %}{% endblock contenido %}
+                </div>
+            </div>
+    <!--FOOTER-->
+    </div>
+    <footer>
+      <div class='footer_top'>
+        <div class='footer_box'>
+              <h2>Urls</h2>
+              <a href='{% url 'cms:terminos' %}'>Términos y condiciones</a>
+              <a href='http://www.fegarza.com' target="_blank">Página web del desarrollador</a>
+          </div>
+          <div class='footer_box'>
+              <h2>Nuestras redes sociales</h2>
+              <p>Mantente informado de lo que pasa en Zinemas</p>
+              <div class='social_footer'>
+                  <a href="https://www.facebook.com/Zinemas-533033066871384/?ref=ts&fref=ts" target="_blank"><img src='{% static 'imagenes/social/facebook.png' %}' width="35px"></a>
+                  <a href="#"><img src='{% static 'imagenes/social/twitter.png' %}' width="35px"></a>
+              </div>
+          </div>
+          <div class='footer_box'>
+              <h2>Sobre nosostros</h2>
+              <p>Pagina web desarrollada por Juan Felipe Garza Sánchez</p>
+              <a href="https://www.facebook.com/index6" target="_blank">
+                <div class='contactanos'>
+                    CONTACTANOS
+                </div>
+              </a>
+          </div>
+        </div>
+        <div class='footer_bottom'>
+          Zinemas 2016 | © Todos los derechos reservados
+        </div>
+    </footer>
+  </body>
+</html>
+<!--/FOOTER-->
